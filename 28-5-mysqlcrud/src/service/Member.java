@@ -1,37 +1,37 @@
+//28기 김소희
 package service;
 
 public class Member {
-	public int MemberNo;
-	public String memberName;
-	public int memberAge;
-	public String MemberAddrDao;
-	public int getMemberNo() {
-		return MemberNo;
+	
+	//private: 해당 클래스에서만 접근가능
+	private int member_no;
+	private String member_name;
+	private int member_age;
+	
+	public int getMember_no() {
+		return member_no;
 	}
-	public void setMemberNo(int memberNo) {
-		MemberNo = memberNo;
+	public void setMember_no(int member_no) {
+		this.member_no = member_no;
 	}
-	public String getMemberName() {
-		return memberName;
+	public String getMember_name() {
+		return member_name;
 	}
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
 	}
-	public int getMemberAge() {
-		return memberAge;
+	public int getMember_age() {
+		return member_age;
 	}
-	public void setMemberAge(int memberAge) {
-		this.memberAge = memberAge;
+	public void setMember_age(int member_age) {
+		this.member_age = member_age;
 	}
-	public String getMemberAddrDao() {
-		return MemberAddrDao;
-	}
-	public void setMemberAddrDao(String memberAddrDao) {
-		MemberAddrDao = memberAddrDao;
+	
+	
 	} 
 	
 	
 
 
 	
-}
+
