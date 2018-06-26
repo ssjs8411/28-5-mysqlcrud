@@ -7,7 +7,6 @@
 <jsp:setProperty name="m" property="*"/> <!-- m에 담겨있는 주소값을 따라가서 메소드 개수만큼 모두 호출  -->
 <%request.setCharacterEncoding("euc-kr"); %>  <!-- 한글 깨지지않게 -->
 <%
-
 	MemberDao mdao = new MemberDao(); //mdao 객체 생성
 	mdao.insertMember(m);	//m에 담겨있는 주소값을 따라가서 insertMember메소드를 호출해주세요
 %>

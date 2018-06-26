@@ -21,10 +21,10 @@ public class MemberDao {
 			e.printStackTrace();
 		}
 			
-        //DB연결(ip주소, port번호 , DB명 , ID, PW)
-        String jdbcDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr"; //데이터베이스 명
-        String dbUser = "root";		
-        String dbPass = "java0000";		
+	        //DB연결(ip주소, port번호 , DB명 , ID, PW)
+	        String jdbcDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr"; //데이터베이스 명
+	        String dbUser = "root";		
+	        String dbPass = "java0000";		
         
 		try {
 			conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);

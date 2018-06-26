@@ -7,7 +7,7 @@
 <title>insertMemberForm</title>
 </head>
 <body>
-<form action="<%= request.getContextPath() %>/insertMemberAction.jsp" method="post"> <!--post 방식으로 insertMemberAction.jsp로 보내주세요 -->
+<form action="<%= request.getContextPath() %>/Member/insertMemberAction.jsp" method="post"> <!--post 방식으로 Member 폴더 안에 insertMemberAction.jsp로 보내주세요 -->
 	<table border="1">
 		<tr>
 			<td>멤버이름</td>

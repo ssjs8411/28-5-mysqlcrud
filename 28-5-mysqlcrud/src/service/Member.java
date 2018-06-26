@@ -1,14 +1,15 @@
 //28기 김소희
-package service;
+package service;								//package service
 
-public class Member {
+//public: 외부 어디서나 접근가능
+public class Member {							//Member class				
 	
 	//private: 해당 클래스에서만 접근가능
-	private int member_no;
-	private String member_name;
-	private int member_age;
+	private int member_no;						//접근 지정자 private int 데이터 타입으로 전역변수 member_no 선언
+	private String member_name;					//접근 지정자 private String 데이터 타입으로 전역변수 member_name 선언
+	private int member_age;						//접근 지정자 private int 데이터 타입으로 전역변수 member_age 선언
 	
-	public int getMember_no() {
+	public int getMember_no() {					//리턴 있는 메소드 리턴 데이터 타입은 int
 		return member_no;
 	}
 	public void setMember_no(int member_no) {
