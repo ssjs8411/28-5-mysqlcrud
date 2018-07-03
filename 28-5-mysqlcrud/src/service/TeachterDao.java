@@ -4,8 +4,9 @@ package service; 	// service 패키지 내에 있다
 import java.sql.Connection;		// Connection 사용위해 import
 import java.sql.DriverManager;	// DriverManager 사용위해 import 
 import java.sql.PreparedStatement;	// PreparedStatement 사용위해 import
+import java.sql.ResultSet;
 import java.sql.SQLException;	// 오류검사 위해 import
-
+import java.util.ArrayList;
 
 public class TeachterDao {		// TeachterDao 클래스
 	
@@ -59,7 +60,85 @@ public class TeachterDao {		// TeachterDao 클래스
 	}
 	return 0;
 }
-}
+	public ArrayList<Teachter> selectMemberByPage(int currentPage, int PerPageRow){
+		ArrayList<Teachter> list = new ArrayList<>();
+		
+		Connection connection = null;
+		ResultSet resultSet = null;
+		PreparedStatement statement = null;
+		
+		String jdbcDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+		String dbUser = "root";
+		String dbPass = "java0000";
+		String sql = "SELECT teachter_no, teachter_name, teachter_age FROM teachter ORDER BY teachter_no ASC LIMIT ?,?";
+		
+		try {	
+			Class.forName("com.mysql.jdbc.Driver");	
+				
+			connection= DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, currentPage);
+			statement.setInt(2, PerPageRow);
+			
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				Teachter teachter = new Teachter();
+				teachter.setTeachter_no(resultSet.getInt("teachter_no"));
+				teachter.setTeachter_name(resultSet.getString("teachter_name"));
+				teachter.setTeachter_age(resultSet.getInt("teachter_age"));
+				list.add(teachter);
+			}
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}finally{
+			
+			if (resultSet != null) try { resultSet.close(); } catch(SQLException ex) {}
+			if (statement != null) try { statement.close(); } catch(SQLException ex) {}
+			
+			
+			if (connection != null) try { connection.close(); } catch(SQLException ex) {}
+		}
+		
+		return list;
+	}
+	public int count() {
+		Connection connection = null;
+		ResultSet resultSet = null;
+		PreparedStatement statement = null;
+		int rowNumber = 0;
+		
+		String jdbcDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+		String dbUser = "root";
+		String dbPass = "java0000";
+		String sql = "SELECT COUNT(*) FROM teachter";
+		
+		try {	
+			Class.forName("com.mysql.jdbc.Driver");		
+				
+			connection= DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+			statement = connection.prepareStatement(sql);
+			
+			resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				rowNumber = resultSet.getInt("COUNT(*)");
+			}
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}finally{
+			
+			if (resultSet != null) try { resultSet.close(); } catch(SQLException ex) {}
+			if (statement != null) try { statement.close(); } catch(SQLException ex) {}
+			
+			
+			if (connection != null) try { connection.close(); } catch(SQLException ex) {}
+		}
+		return rowNumber;
+	}
+		}
 		
 		
 	
