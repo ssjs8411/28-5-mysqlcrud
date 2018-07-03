@@ -10,6 +10,130 @@ import java.util.ArrayList;
 
 public class StudentDao {				// StudentDao 클래스
 	
+	public int deleteStudent(int student_no) {
+		// Student 삭제를 하기 위한 메서드
+		// 리턴 int, 쿼리 실행결과값 리턴
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int check = 0;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+			String dbUser = "root";
+			String dbPass = "java0000";
+			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+			
+			pstmt = conn.prepareStatement("DELETE FROM student WHERE student_no=?");
+			pstmt.setInt(1, student_no);
+			check = pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(실행순서 거꾸로 종료시켜준다)
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		
+		return check;
+		
+	}
+	
+	public void updateStudent(Student s) {
+		// Student 업데이트를 하기 위한 메서드
+		// 리턴 타입 없음
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+			String dbUser = "root";
+			String dbPass = "java0000";
+			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+			
+			pstmt = conn.prepareStatement("UPDATE student SET student_name=?, student_age=? WHERE student_no=?");
+			pstmt.setString(1, s.getStudent_name());
+			pstmt.setInt(2, s.getStudent_age());
+			pstmt.setInt(3, s.getStudent_no());
+			
+			pstmt.executeUpdate();
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(실행순서 거꾸로 종료시켜준다)
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		
+	}
+	
+	
+	public Student selectUpdateStudent(int student_no) {
+		// 수정화면에 정보를 불러오기 위한 메서드
+		// Student 클래스의 주소값 리턴
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Student s = new Student();
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+			String dbUser = "root";
+			String dbPass = "java0000";
+			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+			
+			pstmt = conn.prepareStatement("SELECT student_no, student_name, student_age FROM student WHERE student_no=?");
+			pstmt.setInt(1, student_no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				s.setStudent_no(rs.getInt("student_no"));
+				s.setStudent_name(rs.getString("student_name"));
+				s.setStudent_age(rs.getInt("student_age"));
+			}
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(실행순서 거꾸로 종료시켜준다)
+			if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		
+		return s;
+		
+	}
+	
+	
 	public int selectCount() {
 		
 		// 테이블 내의 데이터 갯수를 구하기 위한 메서드

@@ -15,17 +15,21 @@
 		</style>
 	</head>
 	<body>
+		<h1>전체조회</h1>
 		<table>
 			<tr>
 				<th>번호</th>
 				<th>이름</th>
 				<th>나이</th>
+				<th>주소등록</th>
+				<th>수정</th>
+				<th>삭제</th>
 			</tr>
 <%
 	request.setCharacterEncoding("euc-kr");
 	
 	int currentPage = 1;	// 페이지 번호
-	int rowPerPage = 1;		// 한 페이지당 보는 갯수
+	int rowPerPage = 3;		// 한 페이지당 보는 갯수
 			
 	if(request.getParameter("currentPage") !=null ){
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -42,8 +46,11 @@
 		
 			<tr>
 				<td><%= s.getStudent_no() %></td>
-				<td><%= s.getStudent_name() %></td>
+				<td><a href="<%=request.getContextPath()%>/Student/studentAddrList.jsp?student_no=<%=s.getStudent_no()%>"><%= s.getStudent_name() %></a></td>
 				<td><%= s.getStudent_age() %></td>
+				<td><a href="<%=request.getContextPath()%>/Student/insertStudentAddrForm.jsp?student_no=<%=s.getStudent_no()%>">주소등록</a></td>
+				<td><a href="<%=request.getContextPath()%>/Student/updateStudentForm.jsp?student_no=<%=s.getStudent_no()%>">수정</a></td>
+				<td><a href="<%=request.getContextPath()%>/Student/deleteStudent.jsp?student_no=<%=s.getStudent_no()%>">삭제</a></td>
 			</tr>	
 <%		
 	}

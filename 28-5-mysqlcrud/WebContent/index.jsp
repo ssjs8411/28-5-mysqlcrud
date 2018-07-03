@@ -10,9 +10,9 @@
 	<h1>index.jsp</h1>
 	<ul>
 		<li><a href="<%=request.getContextPath() %>/Member/MemberList.jsp">MemberList</a></li>
-		<li><a href="<%=request.getContextPath() %>/Student/studentList.jsp">MemberList</a></li>
-		<li><a href="<%=request.getContextPath() %>/Teachter/Teachterlist.jsp">MemberList</a></li>
-		<li><a href="<%=request.getContextPath() %>/Employed/EmployedList.jsp">MemberList</a></li>
+		<li><a href="<%=request.getContextPath() %>/Student/studentList.jsp">studentList</a></li>
+		<li><a href="<%=request.getContextPath() %>/Teachter/Teachterlist.jsp">Teachterlist</a></li>
+		<li><a href="<%=request.getContextPath() %>/Employed/EmployedList.jsp">EmployedList</a></li>
 	</ul>
 </body>
 </html>
