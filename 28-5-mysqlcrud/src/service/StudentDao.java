@@ -61,7 +61,7 @@ public class StudentDao {				// StudentDao 클래스
 		// ArrayList type으로 Student클래스의 주소값 리턴(배열)
 		// 쿼리문의 몇번 부터 몇개까지 출력할건지 입력위해 매개변수 2개 전부 int type
 		
-		ArrayList<Student> list = new ArrayList<>();
+		ArrayList<Student> list = new ArrayList<Student>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
