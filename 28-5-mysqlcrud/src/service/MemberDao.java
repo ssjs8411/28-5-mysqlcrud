@@ -9,58 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
  
 public class MemberDao {
-    
-	public Member mSelectforUpdate(int m_no) {
-		
-	
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			Member m = null;
-		try {
-	         Class.forName("com.mysql.jdbc.Driver");
-	            
-	         String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
-	         String dbUser = "root";
-	         String dbPass = "java0000";
-	         conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
-	         
-	         pstmt = conn.prepareStatement("SELECT * FROM member WHERE member_no=? ");
-	         pstmt.setInt(1, m_no);
-	         
-	         rs = pstmt.executeQuery();
-	         
-	         if(rs.next()) {
-	        	 m = new Member();
-	        	 m.setMember_name(rs.getString("member_name"));
-	        	 m.setMember_age(rs.getInt("member_age"));
-	        	 m.setMember_no(rs.getInt("member_no"));
-	        	 
-	       } 
-	         
-		   } catch (ClassNotFoundException e) {
-	            // TODO Auto-generated catch block
-	             e.printStackTrace();
-	       } catch (SQLException e) {
-	            // TODO Auto-generated catch block
-	        	 e.printStackTrace();
-	       } finally {
-	            
-	            
-	       }
-	         try {
-	        	 // 닫는 순서 중요
-				rs.close();
-				pstmt.close();
-				conn.close();
-	       } catch (SQLException e) {
-	            // TODO Auto-generated catch block
-	             e.printStackTrace();
-	       } 
-	         return m;
-	
-}
-		
+
 	
 	public void updateMember(Member m) {
 		
@@ -75,21 +24,75 @@ public class MemberDao {
 	         String dbPass = "java0000";
 	         conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
 	         
-	         pstmt = conn.prepareStatement("UPDATE member SET member_name, member_age WHERE member_no=?");
+	         pstmt = conn.prepareStatement("UPDATE member SET member_name=?, member_age=? WHERE member_no=?");
 	         pstmt.setString(1, m.getMember_name());
 	         pstmt.setInt(2, m.getMember_age());
 	         pstmt.setInt(3, m.getMember_no());
 	         
 	         pstmt.executeUpdate();
 	         
-	}catch (ClassNotFoundException e) {
+		}catch (ClassNotFoundException e) {
              // TODO Auto-generated catch block
              e.printStackTrace();
-    }catch (SQLException e) {
-         // TODO Auto-generated catch block
-     		e.printStackTrace();
-    }
+		}catch (SQLException e) {
+    	// TODO Auto-generated catch block
+     		 e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(닫는 순서 중요)
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
 	}
+	
+	public Member mSelectUpdate(int member_no) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Member m = new Member();
+		
+		try {
+	         Class.forName("com.mysql.jdbc.Driver");
+	            
+	         String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+	         String dbUser = "root";
+	         String dbPass = "java0000";
+	         conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+	         
+	         pstmt = conn.prepareStatement("SELECT member_no,, member_name, member_age FROM member WHERE member_no=?");
+	         pstmt.setInt(1, member_no);
+	         
+	         rs = pstmt.executeQuery();
+	         
+	         if(rs.next()) {
+	        	 m.setMember_no(rs.getInt("member_no"));
+	        	 m.setMember_name(rs.getString("member_name"));
+	        	 m.setMember_age(rs.getInt("member_age"));
+	         }
+	         
+		} catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+    		 e.printStackTrace();
+    		 
+		}finally {
+			
+			// 객체 종료(닫는 순서 중요)
+			if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+			return m;
+		}
+			
+		
+	
+	
     public int selectCount () {
         
             Connection conn = null;
@@ -114,25 +117,21 @@ public class MemberDao {
                 
                 }
             
-        }    catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-        }     catch (SQLException e) {
+        } catch (SQLException e) {
             // TODO Auto-generated catch block
         		e.printStackTrace();
-        }    finally {
-            
-            
-        }
-            try {
-                // 닫는 순서 중요
-                rs.close();
-                pstmt.close();
-                conn.close();
-        }     catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-        } 
+  
+        } finally {
+			
+        	// 객체 종료(닫는 순서 중요)
+			if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
             return totalRow;    
     }   
         
@@ -172,24 +171,20 @@ public class MemberDao {
 	                
 	            }
 	            
-        }    catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
         		e.printStackTrace();
-        }    catch (SQLException e) {
+        } catch (SQLException e) {
             // TODO Auto-generated catch block
         		e.printStackTrace();
-        }    finally {
-            
-        }        
-            try {
-	            // 닫는 순서 중요
-	            rs.close();
-	            pstmt.close();
-	            conn.close();
-        }     catch (SQLException e) {
-            // TODO Auto-generated catch block
-            	e.printStackTrace();
-        }    
+        } finally {
+			
+        	// 객체 종료(닫는 순서 중요)
+			if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
             return list;
     }
             
@@ -228,16 +223,13 @@ public class MemberDao {
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-        
-        try {
-            // 닫는 순서 중요
-            pstmt.close();        
-            conn.close();    
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        } finally {
+			
+        	// 객체 종료(닫는 순서 중요)
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
         return 0;
     }
  

@@ -16,11 +16,13 @@
                 <td>이름</td>
                 <td>나이</td>
                 <td>주소입력</td>
-                <td>삭제</td>
                 <td>수정</td>
+                <td>삭제</td>
             </tr>
         
 <%
+	request.setCharacterEncoding("euc-kr");
+
     int currentPage = 1;		// 페이지 번호
     int rowPerPage = 3;		// 한 페이지에 보이는 개수
     
@@ -39,11 +41,11 @@
  
             <tr>
                 <td><%= m.getMember_no() %></td>
-                <td><a href="./memberAddrList.jsp?no=?"><%= m.getMember_name() %></a></td> <!-- 이름 클릭하면  -->
+                <td><a href="./memberAddrList.jsp?member_no=<%= m.getMember_no() %>"><%= m.getMember_name() %></a></td> <!-- 이름 클릭하면  -->
                 <td><%= m.getMember_age() %></td>
-                <td><a href="./insertMemberAddr.jsp?no=?">주소입력</a></td>
-                <td><a href="./deleteMemberAction.jsp?no=?">삭제</a></td>
-                <td><a href="./updateMemberForm.jsp?no=?">수정</a></td>
+                <td><a href="./insertMemberAddr.jsp?member_no=<%= m.getMember_no() %>">주소입력</a></td>
+                <td><a href="./updateMemberForm.jsp?member_no=<%= m.getMember_no() %>">수정</a></td>
+                <td><a href="./deleteMemberAction.jsp?member_no=<%= m.getMember_no() %>">삭제</a></td>
                 <!-- updateMemberForm -> updateMemberAction 넘어가게 -->
             </tr>
 <%
@@ -75,18 +77,6 @@
     }
 %>        
     
- <!-- 
  
- 이전 다음 전
-<form>
- 	<div>
- 		이름:
- 		<input type="text" name="searchWord">
- 		<button type="button">검색</button>
- 	</div>
-</form>
- 
- 
-  -->
     </body>
 </html>
