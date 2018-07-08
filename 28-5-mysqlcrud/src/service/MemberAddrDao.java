@@ -8,6 +8,50 @@ import java.sql.SQLException;
 
 public class MemberAddrDao {
 	
+	public int deleteMemberAddr (int member_no) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+            Class.forName("com.mysql.jdbc.Driver");        //드라이버 로딩
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+            
+            // DB연결(ip주소, port번호 , DB명 , ID, PW)
+            String jdbcDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr"; //데이터베이스 명
+            String dbUser = "root";        
+            String dbPass = "java0000";        
+        
+        try {
+            conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+            System.out.println(conn + "<--conn");
+            
+            // 쿼리문 작성
+            pstmt = conn.prepareStatement("DELETE FROM member_addr WHERE member_no=?");
+            pstmt.setInt(1, member_no);
+            
+            pstmt.executeUpdate();
+            
+        } catch (SQLException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+              
+        }finally {
+  			
+  			// 객체 종료(닫는 순서 중요)
+  			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+  			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+  			
+  		}
+		return member_no;   
+            
+		
+		
+	}
+	
 	public void updateMemberAddr (MemberAddr maddr) {
 		
 		Connection conn = null;
@@ -194,7 +238,8 @@ public class MemberAddrDao {
 			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
 		
 	}
-		return 0;
+			return 0;
+	
 		
 	}
 	

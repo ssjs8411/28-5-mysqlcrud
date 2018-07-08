@@ -13,14 +13,15 @@
 	<body>
 <%
 	request.setCharacterEncoding("euc-kr");
-
+	
 	int member_no = Integer.parseInt(request.getParameter("member_no"));
 
 	MemberDao mdao = new MemberDao();
 	Member m = mdao.mSelectUpdate(member_no);
-	
+
 	MemberAddrDao maddrdao = new MemberAddrDao();
 	MemberAddr maddr = maddrdao.mSelectUpdateAddr(member_no);
+	
 	
 
 %>

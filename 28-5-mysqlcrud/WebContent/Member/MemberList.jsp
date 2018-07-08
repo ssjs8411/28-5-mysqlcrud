@@ -43,7 +43,7 @@
                 <td><%= m.getMember_no() %></td>
                 <td><a href="./memberAddrList.jsp?member_no=<%= m.getMember_no() %>"><%= m.getMember_name() %></a></td> <!-- 이름 클릭하면  -->
                 <td><%= m.getMember_age() %></td>
-                <td><a href="./insertMemberAddr.jsp?member_no=<%= m.getMember_no() %>">주소입력</a></td>
+                <td><a href="./insertMemberAddrForm.jsp?member_no=<%= m.getMember_no() %>">주소입력</a></td>
                 <td><a href="./updateMemberForm.jsp?member_no=<%= m.getMember_no() %>">수정</a></td>
                 <td><a href="./deleteMemberAction.jsp?member_no=<%= m.getMember_no() %>">삭제</a></td>
                 <!-- updateMemberForm -> updateMemberAction 넘어가게 -->

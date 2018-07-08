@@ -10,7 +10,42 @@ import java.util.ArrayList;
  
 public class MemberDao {
 
+	public int deleteMember (int member_no) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
 	
+		
+		try {
+	         Class.forName("com.mysql.jdbc.Driver");
+	            
+	         String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+	         String dbUser = "root";
+	         String dbPass = "java0000";
+	         conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+	         
+	         pstmt = conn.prepareStatement("DELETE FORM member WHERE member_no=?");
+	         pstmt.setInt(1, member_no);
+	         
+	         pstmt.executeUpdate();
+	         
+		}catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+		}catch (SQLException e) {
+   	// TODO Auto-generated catch block
+    		 e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(닫는 순서 중요)
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		return member_no;
+		
+		
+	}
 	public void updateMember(Member m) {
 		
 		Connection conn = null;
