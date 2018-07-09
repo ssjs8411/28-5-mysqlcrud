@@ -1,4 +1,5 @@
 <!-- 2018-07-02 ±è¼ÒÈñ -->
+<!-- 2018-07-08 -->
 <%@ page language="java" contentType="text/html; charset=EUC-KR"  pageEncoding="EUC-KR"%>
 <%@ page import = "service.Member" %>
 <%@ page import = "service.MemberAddr" %>

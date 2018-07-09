@@ -8,8 +8,8 @@
 	</head>
 	<body>
 		<form action="<%= request.getContextPath()%>/Student/insertStudentAction.jsp" method="post">
-			이름 : <input type="text" name="student_name">	<br>
-			나이 : <input type="text" name="student_age">	<br>
+			이름 : <input type="text" name="student_name"><br>
+			나이 : <input type="text" name="student_age"><br>
 			<button type="submit">입력</button>
 		</form>
 	</body>

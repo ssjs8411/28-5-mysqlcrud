@@ -9,7 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
  
 public class MemberDao {
-
+	
+	  
 	public int deleteMember (int member_no) {
 		
 		Connection conn = null;
@@ -171,58 +172,74 @@ public class MemberDao {
     }   
         
  
-    public ArrayList<Member> selectStudentByPage(int page, int pagePerRow){
-        
-            ArrayList<Member> list = new ArrayList<>();
-            Connection conn = null;
-            PreparedStatement pstmt = null;
-            ResultSet rs = null;
+    public ArrayList<Member> selectMemberByPage(int page
+    											, int pagePerRow
+    											, String word){
+        // word :
+    	// "" ->쿼리
+    	// "검색단어" -> 쿼리
+    	// 분기문 필요
+    	// 요구사항 -> 동적쿼리
+        ArrayList<Member> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
             
-            String sql = "SELECT member_no, member_name, member_age FROM member ORDER BY member_no LIMIT ?,?";
+          
         
-            try {
-	            Class.forName("com.mysql.jdbc.Driver");
-	            
-	            String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
-	            String dbUser = "root";
-	            String dbPass = "java0000";
-	            conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
-	            
-	            pstmt = conn.prepareStatement(sql);
-	            pstmt.setInt(1, page);
-	            pstmt.setInt(2, pagePerRow);
-	            
-	            rs = pstmt.executeQuery();
-	            
-            while(rs.next()) {    // 조회하여 값이 출력될때까지 반복
-                
-	            Member m  = new Member();
-	                
-	            m.setMember_no(rs.getInt("member_no"));
-	            m.setMember_name(rs.getString("member_name"));
-	            m.setMember_age(rs.getInt("member_age"));
-	                
-	            list.add(m);
-	                
-	            }
-	            
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-        		e.printStackTrace();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-        		e.printStackTrace();
-        } finally {
-			
-        	// 객체 종료(닫는 순서 중요)
-			if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
-			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
-			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
-			
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			 
+			String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+			String dbUser = "root";
+			String dbPass = "java0000";
+			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+				            
+		if(word.equals("")) {
+			String sql = "SELECT member_no, member_name, member_age FROM member ORDER BY member_no LIMIT ?,?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, page);
+			pstmt.setInt(2, pagePerRow);
+		}else {
+			String sql = "SELECT member_no, member_name, member_age FROM member WHERE memeber_name like ? ORDER BY member_no LIMIT ?,?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+word+"%"); //like '%단어%'
+			pstmt.setInt(2, page);
+			pstmt.setInt(3, pagePerRow);
 		}
-            return list;
-    }
-            
+			           
+   
+			rs = pstmt.executeQuery();
+			            
+		while(rs.next()) {    // 조회하여 값이 출력될때까지 반복
+		                
+			Member m  = new Member();
+		
+			m.setMember_no(rs.getInt("member_no"));
+			m.setMember_name(rs.getString("member_name"));
+			m.setMember_age(rs.getInt("member_age"));
+			                
+			list.add(m);
+		
+		}
+			            
+		} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		} finally {
+					
+		// 객체 종료(닫는 순서 중요)
+		if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
+		if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+		if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+		
+		}
+		return list;
+		}
+		            
         
  
     public int insertMember(Member m) {
