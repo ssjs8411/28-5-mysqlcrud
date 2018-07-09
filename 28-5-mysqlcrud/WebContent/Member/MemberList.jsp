@@ -16,6 +16,7 @@
                 <td>이름</td>
                 <td>나이</td>
                 <td>주소입력</td><!-- 다수 -->
+                <td>점수입력</td>
                 <td>수정</td>
                 <td>삭제</td>
             </tr>
@@ -24,7 +25,7 @@
 	request.setCharacterEncoding("euc-kr");
 	
 	String word = "";
-	if(request.getParameter("word")!=null){
+	if(request.getParameter("word") != null){
 		word = request.getParameter("word");
 	}
     int currentPage = 1;		// 페이지 번호
@@ -37,19 +38,20 @@
     int startRow = (currentPage - 1 ) * rowPerPage;		// 시작= (현재 페이지-1) * 한 페이지에 보이는 개수
     
     MemberDao mdao = new MemberDao();		// mdao객체 생성
-    ArrayList<Member> list = mdao.selectMemberByPage(startRow, rowPerPage, word );
+    ArrayList<Member> list = mdao.selectMemberByPage(startRow, rowPerPage, word);
     
-    for (int i=0; i<list.size(); i++){		// 배열
+    for(int i=0; i<list.size(); i++){		// 배열
         Member m = list.get(i);		// 인덱스로 값을 조회
 %>
  
             <tr>
                 <td><%= m.getMember_no() %></td>
-                <td><a href="./memberAddrList.jsp?member_no=<%= m.getMember_no() %>"><%= m.getMember_name() %></a></td> <!-- 이름 클릭하면  -->
+                <td><a href="<%=request.getContextPath()%>/Member/memberAddrList.jsp?member_no=<%= m.getMember_no() %>"><%= m.getMember_name() %></a></td> <!-- 이름 클릭하면  -->
                 <td><%= m.getMember_age() %></td>
-                <td><a href="./insertMemberAddrForm.jsp?member_no=<%= m.getMember_no() %>">주소입력</a></td>
-                <td><a href="./updateMemberForm.jsp?member_no=<%= m.getMember_no() %>">수정</a></td>
-                <td><a href="./deleteMember.jsp?member_no=<%= m.getMember_no() %>">삭제</a></td>
+                <td><a href="<%=request.getContextPath()%>/Member/insertMemberAddrForm.jsp?member_no=<%= m.getMember_no() %>">주소입력</a></td>
+                <td><a href="<%=request.getContextPath()%>/Member/insertScoreForm.jsp?member_no=<%= m.getMember_no() %>">점수입력</a></td>
+                <td><a href="<%=request.getContextPath()%>/Member/updateMemberForm.jsp?member_no=<%= m.getMember_no() %>">수정</a></td>
+                <td><a href="<%=request.getContextPath()%>/Member/deleteMember.jsp?member_no=<%= m.getMember_no() %>">삭제</a></td>
                 <!-- updateMemberForm -> updateMemberAction 넘어가게 -->
             </tr>
 <%
@@ -57,8 +59,8 @@
 %>
         </table>
 		<form action="<%=request.getContextPath()%>/Member/MemberList.jsp" method="post">
-		<input type="text" name="word">
-		<input type="submit" value="검색">
+			<input type="text" name="word">
+			<input type="submit" value="검색">
         </form>
 <% 		
     int totalRow = mdao.selectCount();		// 총 개수

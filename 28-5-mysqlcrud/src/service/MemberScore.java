@@ -1,3 +1,4 @@
+/*2018-07-09 ±Ëº“»Ò*/
 package service;
 
 public class MemberScore {

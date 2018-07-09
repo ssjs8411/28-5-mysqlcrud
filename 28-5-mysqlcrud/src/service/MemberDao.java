@@ -1,4 +1,4 @@
-//28±â ±è¼ÒÈñ
+/*2018-07-02 ±è¼ÒÈñ*/
 package service;
  
 import java.sql.Connection;
@@ -153,14 +153,14 @@ public class MemberDao {
                 
                 }
             
-        } catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-        } catch (SQLException e) {
+            } catch (SQLException e) {
             // TODO Auto-generated catch block
         		e.printStackTrace();
   
-        } finally {
+            } finally {
 			
         	// °´Ã¼ Á¾·á(´Ý´Â ¼ø¼­ Áß¿ä)
 			if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
@@ -172,9 +172,8 @@ public class MemberDao {
     }   
         
  
-    public ArrayList<Member> selectMemberByPage(int page
-    											, int pagePerRow
-    											, String word){
+    public ArrayList<Member> selectMemberByPage(int page, int pagePerRow, String word){
+    	// ÇÐ»ý¸®½ºÆ® ±¸ÇÏ´Â ¸Þ¼Òµå
         // word :
     	// "" ->Äõ¸®
     	// "°Ë»ö´Ü¾î" -> Äõ¸®
@@ -184,8 +183,7 @@ public class MemberDao {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-            
-          
+        String sql = null;  
         
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -196,12 +194,12 @@ public class MemberDao {
 			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
 				            
 		if(word.equals("")) {
-			String sql = "SELECT member_no, member_name, member_age FROM member ORDER BY member_no LIMIT ?,?";
+			sql = "SELECT member_no, member_name, member_age FROM member ORDER BY member_no LIMIT ?,?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, page);
 			pstmt.setInt(2, pagePerRow);
 		}else {
-			String sql = "SELECT member_no, member_name, member_age FROM member WHERE memeber_name like ? ORDER BY member_no LIMIT ?,?";
+			sql = "SELECT member_no, member_name, member_age FROM member WHERE memeber_name LIKE ? ORDER BY member_no LIMIT ?,?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+word+"%"); //like '%´Ü¾î%'
 			pstmt.setInt(2, page);

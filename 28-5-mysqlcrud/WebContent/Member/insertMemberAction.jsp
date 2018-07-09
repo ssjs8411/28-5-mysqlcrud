@@ -9,4 +9,6 @@
 <%
 	MemberDao mdao = new MemberDao(); //mdao 객체 생성
 	mdao.insertMember(m);	//m에 담겨있는 주소값을 따라가서 insertMember메소드를 호출해주세요
+	
+	response.sendRedirect(request.getContextPath() + "/Member/MemberList.jsp");
 %>
