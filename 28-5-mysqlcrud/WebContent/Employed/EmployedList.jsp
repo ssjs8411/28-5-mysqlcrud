@@ -20,6 +20,9 @@
 				<th>번호</th>
 				<th>이름</th>
 				<th>나이</th>
+				<th>주소등록</th>
+				<th>수정</th>
+				<th>삭제</th>				
 			</tr>	
 <%
 	request.setCharacterEncoding("euc-kr");
@@ -44,6 +47,9 @@
 				<td><%= e.getEmployed_no() %></td>
 				<td><%= e.getEmployed_name() %></td>
 				<td><%= e.getEmployed_age() %></td>
+				<td><a href="<%=request.getContextPath()%>/Employed/insertEmployedAddrForm.jsp?employed_no=<%=e.getEmployed_no()%>">주소등록</a></td>
+				<td><a href="<%=request.getContextPath()%>/Employed/updateEmployedForm.jsp?employed_no=<%=e.getEmployed_no()%>">수정</a></td>
+				<td><a href="<%=request.getContextPath()%>/Employed/deleteEmployed.jsp?employed_no=<%=e.getEmployed_no()%>">삭제</a></td>				
 			</tr>	
 <%		
 	}

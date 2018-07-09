@@ -10,6 +10,129 @@ import java.util.ArrayList;
 
 public class EmployedDao {							// EmployedDao 클래스
 	
+	public int deleteEmployed(int employed_no) {
+		// Employed 삭제를 하기 위한 메서드
+		// 리턴 int, 쿼리 실행결과값 리턴
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int check = 0;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+			String dbUser = "root";
+			String dbPass = "java0000";
+			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+			
+			pstmt = conn.prepareStatement("DELETE FROM employed WHERE employed_no=?");
+			pstmt.setInt(1, employed_no);
+			check = pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(실행순서 거꾸로 종료시켜준다)
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		
+		return check;
+		
+	}
+	
+	public void updateEmployed(Employed emp) {
+		// Employed 업데이트를 하기 위한 메서드
+		// 리턴 타입 없음
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+			String dbUser = "root";
+			String dbPass = "java0000";
+			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+			
+			pstmt = conn.prepareStatement("UPDATE employed SET employed_name=?, employed_age=? WHERE employed_no=?");
+			pstmt.setString(1, emp.getEmployed_name());
+			pstmt.setInt(2, emp.getEmployed_age());
+			pstmt.setInt(3, emp.getEmployed_no());
+			
+			pstmt.executeUpdate();
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(실행순서 거꾸로 종료시켜준다)
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		
+	}
+	
+	
+	public Employed selectUpdateEmployed(int employed_no) {
+		// 수정화면에 정보를 불러오기 위한 메서드
+		// Student 클래스의 주소값 리턴
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Employed emp = new Employed();
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+			String dbUser = "root";
+			String dbPass = "java0000";
+			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+			
+			pstmt = conn.prepareStatement("SELECT employed_no, employed_name, employed_age FROM employed WHERE employed_no=?");
+			pstmt.setInt(1, employed_no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				emp.setEmployed_no(rs.getInt("employed_no"));
+				emp.setEmployed_name(rs.getString("employed_name"));
+				emp.setEmployed_age(rs.getInt("employed_age"));
+			}
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(실행순서 거꾸로 종료시켜준다)
+			if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		
+		return emp;
+		
+	}
+	
 	public int selectCountEmployed() {
 			
 			// 테이블 내의 데이터 갯수를 구하기 위한 메서드
