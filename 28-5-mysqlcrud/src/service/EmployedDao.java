@@ -178,18 +178,22 @@ public class EmployedDao {							// EmployedDao 클래스
 			
 		}
 	
-	public ArrayList<Employed> selectEmployedByPage(int page, int pagePerRow){
+	public ArrayList<Employed> selectEmployedByPage(int page, int pagePerRow, String searchWord){
 		
 		// 테이블 내 전체 수를 구하기 위한 메서드
 		// ArrayList type으로 Employed클래스의 주소값 리턴(배열)
-		// 쿼리문의 몇번 부터 몇개까지 출력할건지 입력위해 매개변수 2개 전부 int type
+		// 쿼리문의 몇번 부터 몇개까지 출력할건지 입력위해 매개변수 2개  int type
+		// 검색조건을 받는 searchWord 검색값이 없을땐 전체 조회
+		// 18.7.9 메서드 수정(검색조건 시 쿼리문 수정)
 		
 		ArrayList<Employed> list = new ArrayList<Employed>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT employed_no, employed_name, employed_age FROM employed ORDER BY employed_no LIMIT ?,?";	// student에서 student_no칼럼 기준 몇번부터 몇개까지 조회
+		String sql = null;
+		
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -198,9 +202,19 @@ public class EmployedDao {							// EmployedDao 클래스
 			String dbPass = "java0000";
 			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
 			
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, page);
-			pstmt.setInt(2, pagePerRow);
+			if(searchWord.equals("")) {
+				sql = "SELECT employed_no, employed_name, employed_age FROM employed ORDER BY employed_no LIMIT ?,?";	// employed에서 employed_no칼럼 기준 몇번부터 몇개까지 조회
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, page);
+				pstmt.setInt(2, pagePerRow);
+			}else {
+				sql = "SELECT employed_no, employed_name, employed_age FROM employed WHERE employed_name LIKE ? ORDER BY employed_no LIMIT ?,?";	
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+searchWord+"%");
+				pstmt.setInt(2, page);
+				pstmt.setInt(3, pagePerRow);
+			}
+			
 			
 			rs = pstmt.executeQuery();
 			
