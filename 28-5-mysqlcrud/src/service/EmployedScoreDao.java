@@ -10,6 +10,107 @@ import java.util.ArrayList;
 
 public class EmployedScoreDao {
 	
+	public int selectScoreAvg() {
+		// score의 평균을 구하는 메서드
+		// 평균값을 리턴한다
+		// 매개변수 없음
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int avg = 0;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+			String dbUser = "root";
+			String dbPass = "java0000";
+			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+			
+			pstmt = conn.prepareStatement("SELECT AVG(employed_score) FROM employed_score");
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				avg = rs.getInt("AVG(employed_score)");
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(실행순서 거꾸로 종료시켜준다)
+			if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		
+		return avg;
+		
+	}
+	
+	public ArrayList<EmployedAndScore> selectEmployedListAboveAvg(){
+		// score의 평균값 이상의 리스트를 조회하는 메서드
+		// EmployedAndScore의 주소값을 리턴한다(배열)
+		// 매개변수 없음
+
+		ArrayList<EmployedAndScore> list = new ArrayList<EmployedAndScore>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+			String dbUser = "root";
+			String dbPass = "java0000";
+			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+			pstmt = conn.prepareStatement("SELECT employed.employed_no, employed.employed_name, employed_score.employed_score FROM employed_score INNER JOIN employed ON employed_score.employed_no = employed.employed_no WHERE employed_score.employed_score >= (SELECT AVG(employed_score) FROM employed_score)");			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				EmployedAndScore eas = new EmployedAndScore();
+				Employed e = new Employed();
+				EmployedScore ec = new EmployedScore();
+				
+				e.setEmployed_no(rs.getInt("employed_no"));
+				e.setEmployed_name(rs.getString("employed_name"));
+				ec.setEmployed_score(rs.getInt("employed_score"));
+				
+				eas.setEmployed(e);
+				eas.setEmployedScore(ec);
+				
+				list.add(eas);
+			}
+		
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(실행순서 거꾸로 종료시켜준다)
+			if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		
+		
+		return list;
+		
+	}
+	
 	public ArrayList<EmployedAndScore> selectEmployedAndScored(){
 		// Employed 테이블과 Employed_score 테이블이 같이 조회하기 위한 메서드
 		// 리턴값 EmployedAndScore 클래스의 주소값(배열)

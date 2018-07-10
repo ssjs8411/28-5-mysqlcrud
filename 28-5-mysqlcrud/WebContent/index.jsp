@@ -19,7 +19,7 @@
 		<li><a href="<%=request.getContextPath() %>/Member/MemberList.jsp">MemberListAboveAvg</a></li>
 		<li><a href="<%=request.getContextPath() %>/Student/studentListAboveAvg.jsp">studentListAboveAvg</a></li>
 		<li><a href="<%=request.getContextPath() %>/Teachter/Teachterlist.jsp">TeachterlistAboveAvg</a></li>
-		<li><a href="<%=request.getContextPath() %>/Employed/EmployedList.jsp">EmployedListAboveAvg</a></li>
+		<li><a href="<%=request.getContextPath() %>/Employed/EmployedListAboveAvg.jsp">EmployedListAboveAvg</a></li>
 	</ul>
 </body>
 </html>
