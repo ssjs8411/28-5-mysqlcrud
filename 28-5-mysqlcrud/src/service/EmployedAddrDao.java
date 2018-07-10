@@ -191,7 +191,7 @@ public class EmployedAddrDao {
 		 
 		Connection conn = null;				// DB 연결을 위한 변수 선언 및 값 초기화
 		PreparedStatement pstmt = null;		// 객체 생성을 위한 변수 선언 및 값 초기화
-
+		
 		
 		try{		// 오류가 발생할수도 있음 오류가 발생하면 catch에서 처리
 		
@@ -206,9 +206,9 @@ public class EmployedAddrDao {
 		
 		// 3단계: 쿼리 실행준비(쿼리문 작성)
 
-			pstmt = conn.prepareStatement("INSERT INTO employed_addr (employed_no, employed_addr_content) VALUES (?, ?)");	// studentAddr 테이블에 insert
-			pstmt.setInt(1, eaddr.getEmployed_no());	// 첫번째 ?에 Student클래스 내에 있는 getStudent_name메서드를 호출하여 메서드의 리턴값을 입력
-			pstmt.setString(2, eaddr.getEmployed_addr_content());		// 두번째 ?에 Student클래스 내에 있는 getStudent_age메서드를 호출하여 메서드의 리턴값을 입력
+			pstmt = conn.prepareStatement("INSERT INTO employed_addr (employed_no, employed_addr_content) VALUES (?, ?)");	// employedAddr 테이블에 insert
+			pstmt.setInt(1, eaddr.getEmployed_no());	// 첫번째 ?에 employed클래스 내에 있는 getemployed_name메서드를 호출하여 메서드의 리턴값을 입력
+			pstmt.setString(2, eaddr.getEmployed_addr_content());		// 두번째 ?에 employed클래스 내에 있는 getemployed_age메서드를 호출하여 메서드의 리턴값을 입력
 			
 			// 4단계: 쿼리실행
 			pstmt.executeUpdate();			

@@ -10,6 +10,46 @@ import java.util.ArrayList;
 
 public class EmployedScoreDao {
 	
+	public int deleteEmployedScore(int no) {
+		// employed_score 테이블의 정보를 삭제하는 메서드
+		// 쿼리 실행 결과값 리턴
+		// 매개변수 employed_no의 값
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int check = 0;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+			String dbUser = "root";
+			String dbPass = "java0000";
+			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+			
+			pstmt = conn.prepareStatement("DELETE FROM employed_score WHERE employed_no=?");
+			pstmt.setInt(1, no);
+			
+			check = pstmt.executeUpdate();
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(실행순서 거꾸로 종료시켜준다)
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		
+		return check;
+		
+	}
+	
 	public int selectScoreAvg() {
 		// score의 평균을 구하는 메서드
 		// 평균값을 리턴한다
