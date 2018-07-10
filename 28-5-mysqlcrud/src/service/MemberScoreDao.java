@@ -63,7 +63,7 @@ public class MemberScoreDao {
 	public ArrayList<MemberAndScore> selectMemberListAboveAvg(){
 		// reurn data type ArrayList<MemberAndScore>, selsectMemberListAboveAvg 메소드
 		//	평균 보다 높은 사람의 이름과 점수 (join) 
-		ArrayList<MemberAndScore> list = new ArrayList<MemberAndScore>();		//ArrayList<MemberAndScore> data type으로 list 변수 생성하고  new생성자 메소드로  생성된 ArrayList<MemberAndScore>객체의 주소 값을 list변수에 할당한다
+		ArrayList<MemberAndScore> als = new ArrayList<MemberAndScore>();		//ArrayList<MemberAndScore> data type으로 list 변수 생성하고  new생성자 메소드로  생성된 ArrayList<MemberAndScore>객체의 주소 값을 list변수에 할당한다
 		Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -77,7 +77,7 @@ public class MemberScoreDao {
             
             conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
 
-            pstmt = conn.prepareStatement("SELECT m.member_name, ms.score FROM member_score ms INNER JOIN  member m on ms.member_no = m.member_no WHERE ms.score>=(SELECT AVG(score) FROM member_score)");
+            pstmt = conn.prepareStatement("SELECT m.member_no, m.member_name, ms.score FROM member_score ms INNER JOIN  member m on ms.member_no = m.member_no WHERE ms.score>=(SELECT AVG(score) FROM member_score)");
             
             rs = pstmt.executeQuery();
             
@@ -96,8 +96,8 @@ public class MemberScoreDao {
      	   	mas.setMemberScore(ms);
      	   	
      	   	
-     	   	list.add(mas);
-     	   	//list 에 담겨있는 주소값을 따라가서 add메서드를 호출하여 매개변수에는 mas에 담겨있는 주소값을 대입한다
+     	   als.add(mas);
+     	   	//als 에 담겨있는 주소값을 따라가서 add메서드를 호출하여 매개변수에는 mas에 담겨있는 주소값을 대입한다
      	   	
         }
         
@@ -116,7 +116,7 @@ public class MemberScoreDao {
 		
         }
         
-		return null;
+		return als;
         
 	}
 
@@ -138,7 +138,7 @@ public class MemberScoreDao {
             
             conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
 
-            pstmt = conn.prepareStatement("SELECT ms.member_score_no, member_no, member_name, member_age, score FROM member_score ms INNER JOIN member m ON ms.member_no = m.member_no");
+            pstmt = conn.prepareStatement("SELECT ms.member_score_no, ms.member_no, m.member_name, m.member_age, score FROM member_score ms INNER JOIN member m ON ms.member_no = m.member_no");
             
             rs = pstmt.executeQuery();
             

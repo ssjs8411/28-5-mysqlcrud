@@ -34,9 +34,8 @@
 		</thead>
 		<tbody>
 	<%
-				ArrayList<MemberAndScore> als = new ArrayList<MemberAndScore>();
-				//ArrayList<MemberAndScore> data type으로 als 변수 생성하고  new생성자 메소드로  생성된  ArrayList<MemberAndScore> 객체의 주소 값을 als 변수에 할당한다
-				for(int i=0; i<als.size(); i++){
+				ArrayList<MemberAndScore> als = msdao.selectMemberListAboveAvg();
+				for (int i=0; i<als.size(); i++){
 				
 				MemberAndScore mas = als.get(i);
 				Member m = mas.getMember();
