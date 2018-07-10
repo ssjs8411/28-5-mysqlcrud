@@ -7,7 +7,7 @@
 </head>
 	<body>
 <%	
-		int member_no = Integer.parseInt(request.getParameter("member_no"));
+		int member_no = Integer.parseInt(request.getParameter("member_no"));		//Çüº¯È¯
 %>
 
 		<form action="<%=request.getContextPath()%>/Member/insertMemberAddrAction.jsp" method="post">

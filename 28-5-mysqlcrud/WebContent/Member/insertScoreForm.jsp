@@ -4,11 +4,11 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-	<title>Insert title here</title>
+	<title>insertScoreForm</title>
 </head>
 <body>
 <%
-int member_no = Integer.parseInt(request.getParameter("member_no"));
+	int member_no = Integer.parseInt(request.getParameter("member_no"));	//형변환
 %>
 
 	<form action="<%=request.getContextPath()%>/Member/insertScoreAction.jsp">

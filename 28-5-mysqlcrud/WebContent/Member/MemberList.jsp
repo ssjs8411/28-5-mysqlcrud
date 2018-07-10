@@ -1,8 +1,8 @@
 <!-- 2018-07-02 김소희 -->
 <%@ page language="java" contentType="text/html; charset=EUC-KR"  pageEncoding="EUC-KR"%>
-<%@ page import = "java.util.ArrayList" %>
-<%@ page import = "service.Member" %>
-<%@ page import = "service.MemberDao" %>
+<%@ page import = "java.util.ArrayList" %>			<!-- ArrayList는 java.util.ArrayList에 포함 import -->
+<%@ page import = "service.Member" %>				<!-- service패키지 안에 Member클래스 import-->
+<%@ page import = "service.MemberDao" %>			<!-- service패키지 안에 MemberDao클래스 import-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,14 +22,14 @@
             </tr>
         
 <%
-	request.setCharacterEncoding("euc-kr");
+	request.setCharacterEncoding("euc-kr");			//한글 안 깨지게
 	
-	String word = "";
-	if(request.getParameter("word") != null){
-		word = request.getParameter("word");
+	String searchWord = "";
+	if(request.getParameter("searchWord") != null){
+		searchWord = request.getParameter("searchWord");
 	}
-    int currentPage = 1;		// 페이지 번호
-    int rowPerPage = 3;		// 한 페이지에 보이는 개수
+    int currentPage = 1;		// 페이지 번호 1페이지
+    int rowPerPage = 3;			// 한 페이지에 보이는 개수 3개
 	
     if(request.getParameter("currentPage") !=null){
         currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -37,11 +37,12 @@
     
     int startRow = (currentPage - 1 ) * rowPerPage;		// 시작= (현재 페이지-1) * 한 페이지에 보이는 개수
     
-    MemberDao mdao = new MemberDao();		// mdao객체 생성
-    ArrayList<Member> list = mdao.selectMemberByPage(startRow, rowPerPage, word);
-    
+    MemberDao mdao = new MemberDao();
+ 	//MemberDao data type으로 mdao 변수 생성하고  new생성자 메소드로  생성된  MemberDao 객체의 주소 값을 mdao 변수에 할당한다
+    ArrayList<Member> list = mdao.selectMemberByPage(startRow, rowPerPage, searchWord);
+  	//ArrayList<Member> type으로 list 변수 선언 startRow,rowPerPage,searchWord 담겨있는 주소 값을 따라가서 selectMemberByPage 메소드 호출
     for(int i=0; i<list.size(); i++){		// 배열
-        Member m = list.get(i);		// 인덱스로 값을 조회
+        Member m = list.get(i);				// 인덱스로 값을 조회
 %>
  
             <tr>
@@ -59,18 +60,18 @@
 %>
         </table>
 		<form action="<%=request.getContextPath()%>/Member/MemberList.jsp" method="post">
-			<input type="text" name="word">
+			<input type="text" name="searchWord">
 			<input type="submit" value="검색">
         </form>
 <% 		
-    int totalRow = mdao.selectCount();		// 총 개수
-    int lastPage = 0;		// 마지막 페이지
+    int totalRow = mdao.selectCount();			// 총 개수
+    int lastPage = 0;							// 마지막 페이지
     
     if(totalRow % rowPerPage == 0) {
         lastPage = totalRow / rowPerPage;		// 마지막 페이지 = 총 개수 나누기 한 페이지에 보이는 개수
         
     }else{
-        lastPage = totalRow / rowPerPage + 1;		// 마지막 페이지 = 총 개수 나누기 한 페이지에 보이는 개수 + 1
+        lastPage = totalRow / rowPerPage + 1;	// 마지막 페이지 = 총 개수 나누기 한 페이지에 보이는 개수 + 1
                 
     }
    

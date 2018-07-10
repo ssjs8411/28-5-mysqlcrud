@@ -1,10 +1,10 @@
 <!-- 2018-07-09 김소희 -->
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
-<%@ page import = "service.MemberScoreDao" %>
-<%@ page import = "service.MemberAndScore" %>
-<%@ page import = "java.util.ArrayList" %>
-<%@ page import = "service.Member" %>
-<%@ page import = "service.MemberScore" %>
+<%@ page import = "service.MemberScoreDao" %>		<!-- service패키지 안에 MemberScoreDao클래스 import-->
+<%@ page import = "service.MemberAndScore" %>		<!-- service패키지 안에 MemberAndScore클래스 import-->
+<%@ page import = "java.util.ArrayList" %>			<!-- ArrayList는 java.util.ArrayList에 포함 import -->
+<%@ page import = "service.Member" %>				<!-- service패키지 안에 Member클래스 import-->
+<%@ page import = "service.MemberScore" %>			<!-- service패키지 안에 MemberScore클래스 import-->
 
 <!DOCTYPE html>
 <html>
@@ -18,15 +18,16 @@
                 <td>번호</td>
                 <td>이름</td>
                 <td>나이</td>
-                <td>점수number</td>
+                <td>점수번호</td>
                 <td>점수</td>
 <%
-	request.setCharacterEncoding("euc-kr");
+	request.setCharacterEncoding("euc-kr");		//한글 안 깨지게
 	
 	MemberScoreDao msdao = new MemberScoreDao();
+	//MemberScoreDao data type으로 msdao변수 생성하고  new생성자 메소드로  생성된  MemberScoreDao객체의 주소 값을 msdao변수에 할당한다
 	ArrayList<MemberAndScore> list = msdao.selectMemberAndScore();
-	
-	for(int i=0; i<list.size(); i++ ){
+	//ArrayList<MemberAndScore> type으로 list 변수를 선언하고 selectMemberAndScore 메소드 호츨
+	for(int i=0; i<list.size(); i++ ){		//반복문
 		MemberAndScore mas = list.get(i);
 		Member m = mas.getMember();
 		MemberScore ms = mas.getMemberScore();
