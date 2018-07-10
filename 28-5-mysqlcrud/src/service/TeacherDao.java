@@ -1,3 +1,4 @@
+//이경선
 package service;						// service 패키지 내에 있다
 
 import java.sql.Connection;				// Connection 사용위해 import
@@ -237,9 +238,6 @@ public class TeacherDao {
 
 	public int insertTeacher(Teacher t)  {			// 접근지정자 public(모든곳에서 접근가능) 
 		
-		
-		
-		 
 		Connection conn = null;				// DB 연결을 위한 변수 선언 및 값 초기화
 		PreparedStatement pstmt = null;		// 객체 생성을 위한 변수 선언 및 값 초기화
 		

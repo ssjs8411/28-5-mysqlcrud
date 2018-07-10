@@ -7,15 +7,15 @@
 		<title>Insert title here</title>
 	</head>
 	<body>
-	  <form action="<%=request.getContextPath()%>/Teachter/insertTeachterAction.jsp" method="post">
+	  <form action="<%=request.getContextPath()%>/Teacher/insertTeacherAction.jsp" method="post">
                 <table>
                     <tr id="name">
                         <td>이름</td>
-                        <td><input type="text" name="teachter_name"></td>
+                        <td><input type="text" name="teacher_name"></td>
                     </tr>
                     <tr id="age">
                         <td>나이</td>
-                        <td><input type="text" name="teachter_age"></td>
+                        <td><input type="text" name="teacher_age"></td>
       				</tr>
       			</table>
       			<input type="submit" value="입력">

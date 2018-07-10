@@ -1,4 +1,4 @@
-
+<!-- 이경선 -->
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ page import = "service.TeacherDao" %>
 <%@ page import = "java.util.ArrayList" %>
@@ -22,11 +22,17 @@
 				<th>이름</th>
 				<th>나이</th>
 				<th>주소입력</th>
+				<th>점수입력</th>
 				<th>수정</th>
 				<th>삭제</th>
 			</tr>
 <%
 	request.setCharacterEncoding("euc-kr");
+	
+	String searchword = "";
+	if(request.getParameter("searchword") != null){
+		searchword = request.getParameter("searchword");
+}
 	
 	int currentPage = 1;	// 페이지 번호
 	int rowPerPage = 3;		// 한 페이지당 보는 갯수
@@ -46,9 +52,10 @@
 		
 			<tr>
 				<td><%= t.getTeacher_no() %></td>
-				<td><a href="<%=request.getContextPath()%>/Teacher/teacherAddrlist.jsp?teacher_no=<%=t.getTeacher_no()%>"><%= t.getTeacher_name() %></a></td>
+				<td><a href="<%=request.getContextPath()%>/Teacher/teacherAddrList.jsp?teacher_no=<%=t.getTeacher_no()%>"><%= t.getTeacher_name() %></a></td>
 				<td><%= t.getTeacher_age() %></td>
 				<td><a href="<%=request.getContextPath()%>/Teacher/insertTeacherAddrForm.jsp?teacher_no=<%=t.getTeacher_no()%>">주소등록</a></td>
+				<td><a href="<%=request.getContextPath()%>/Teacher/insertScoreForm.jsp?teacher_no=<%=t.getTeacher_no()%>">점수입력</a></td>
 				<td><a href="<%=request.getContextPath()%>/Teacher/updateTeacherForm.jsp?teacher_no=<%=t.getTeacher_no()%>">수정</a></td>
 				<td><a href="<%=request.getContextPath()%>/Teacher/deleteTeacher.jsp?teacher_no=<%=t.getTeacher_no()%>">삭제</a></td>
 			</tr>	
@@ -56,6 +63,10 @@
 	}
 %>
 		</table>
+		<form action="<%=request.getContextPath()%>/Teacher/teacherList.jsp" method="post">
+			<input type="text" name="searchWord">
+			<input type="submit" value="검색">
+		</form>
 <%	
 	int totalRow = tdao.selectCount();	// 전체 갯수
 	int lastPage = 0;	// 마지막페이지
