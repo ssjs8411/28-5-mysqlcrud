@@ -10,6 +10,107 @@ import java.util.ArrayList;
 
 public class StudentScoreDao {
 	
+	public int selectScoreAvg() {
+		// score의 평균을 구하는 메서드
+		// 평균값을 리턴한다
+		// 매개변수 없음
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int avg = 0;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+			String dbUser = "root";
+			String dbPass = "java0000";
+			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+			
+			pstmt = conn.prepareStatement("SELECT AVG(score) FROM student_score");
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				avg = rs.getInt("AVG(score)");
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(실행순서 거꾸로 종료시켜준다)
+			if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		
+		return avg;
+		
+	}
+	
+	public ArrayList<StudentAndScore> selectStudentListAboveAvg(){
+		// score의 평균값 이상의 리스트를 조회하는 메서드
+		// StudentAndScore의 주소값을 리턴한다(배열)
+		// 매개변수 없음
+
+		ArrayList<StudentAndScore> list = new ArrayList<StudentAndScore>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+			String dbUser = "root";
+			String dbPass = "java0000";
+			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+			pstmt = conn.prepareStatement("SELECT student.student_no, student.student_name, student_score.score FROM student_score INNER JOIN student ON student_score.student_no = student.student_no WHERE student_score.score >= (SELECT AVG(score) FROM student_score)");			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				StudentAndScore sas = new StudentAndScore();
+				Student s = new Student();
+				StudentScore sc = new StudentScore();
+				
+				s.setStudent_no(rs.getInt("student_no"));
+				s.setStudent_name(rs.getString("student_name"));
+				sc.setScore(rs.getInt("score"));
+				
+				sas.setStudent(s);
+				sas.setStudentScore(sc);
+				
+				list.add(sas);
+			}
+		
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(실행순서 거꾸로 종료시켜준다)
+			if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		
+		
+		return list;
+		
+	}
+	
 	public ArrayList<StudentAndScore> selectStudentAndScored(){
 		// student 테이블과 student_score 테이블이 같이 조회하기 위한 메서드
 		// 리턴값 studentAndScore 클래스의 주소값(배열)
