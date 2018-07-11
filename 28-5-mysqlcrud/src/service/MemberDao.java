@@ -257,17 +257,12 @@ public class MemberDao {
         // catch=예외가 발생시 실행될 코드
         try {
             Class.forName("com.mysql.jdbc.Driver");        //드라이버 로딩
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
             
             // DB연결(ip주소, port번호 , DB명 , ID, PW)
             String jdbcDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr"; //데이터베이스 명
             String dbUser = "root";        
             String dbPass = "java0000";        
-        
-        try {
+            
             conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
             System.out.println(conn + "<--conn");
             
@@ -278,7 +273,9 @@ public class MemberDao {
             
             // 쿼리 실행
             pstmt.executeUpdate();
-            
+   
+    	} catch (ClassNotFoundException e) {
+
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
