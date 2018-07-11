@@ -64,7 +64,7 @@
 %>
 		</table>
 		<form action="<%=request.getContextPath()%>/Teacher/teacherList.jsp" method="post">
-			<input type="text" name="searchWord">
+			<input type="text" name="searchword">
 			<input type="submit" value="°Ë»ö">
 		</form>
 <%	
