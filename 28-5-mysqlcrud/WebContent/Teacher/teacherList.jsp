@@ -44,7 +44,7 @@
 	int startRow = (currentPage - 1) * rowPerPage;	// 시작번호 = (페이지번호-1) * 한 페이지당 보는 갯수
 			
 	TeacherDao tdao = new TeacherDao();		
-	ArrayList<Teacher> list = tdao.selectTeacherByPage(startRow, rowPerPage);	
+	ArrayList<Teacher> list = tdao.selectTeacherByPage(startRow, rowPerPage, searchword);	
 	
 	for(int i=0; i<list.size(); i++){
 		Teacher t = list.get(i);

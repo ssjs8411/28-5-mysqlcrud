@@ -179,7 +179,7 @@ public class TeacherDao {
 		
 	}
 	
-	public ArrayList<Teacher> selectTeacherByPage(int page, int pagePerRow){
+	public ArrayList<Teacher> selectTeacherByPage(int page, int pagePerRow, String searchWord){
 		
 		// 테이블 내 전체 학생의 수를 구하기 위한 메서드
 		
@@ -190,7 +190,7 @@ public class TeacherDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT teacher_no, teacher_name, teacher_age FROM teacher ORDER BY teacher_no LIMIT ?,?";	// student에서 student_no칼럼 기준 몇번부터 몇개까지 조회
+		String sql = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -199,9 +199,20 @@ public class TeacherDao {
 			String dbPass = "java0000";
 			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
 			
+			if(searchWord.equals("")) {
+			sql = "SELECT teacher_no, teacher_name, teacher_age FROM teacher ORDER BY teacher_no LIMIT ?,?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, page);
 			pstmt.setInt(2, pagePerRow);
+			
+			}else{
+				sql = "SELECT teacher_no, teacher_name, teacher_age FROM teacher WHERE teacher_name LIKE ? ORDER BY teacher_no LIMIT ?,?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+searchWord+"%");
+				pstmt.setInt(2, page);
+				pstmt.setInt(3, pagePerRow);				
+			}
+				
 			
 			rs = pstmt.executeQuery();
 			
