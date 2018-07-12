@@ -141,7 +141,7 @@ public class MemberAddrDao {
       }
 
 	
-	public MemberAddr mSelectUpdateAddr (int member_no) {
+	public MemberAddr mSelectforUpdateAddr (int member_no) {
 		//return data type MemberAddr, mSelectUpdateAddr메소드 (int data type으로 매개변수 member_no 생성)
 		Connection conn = null;
 		PreparedStatement pstmt = null;
