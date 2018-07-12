@@ -183,7 +183,44 @@ public class MemberScoreDao {
 		return list;
 		//list에 담겨있는 주소 값을 리턴
 	}
-
+	
+	public void deleteMemberScore (int member_no) {
+		//return 없고 deleteMemberScore 메소드/ int data type으로 매개변수 member_no 생성
+		Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    
+		try {
+		Class.forName("com.mysql.jdbc.Driver");        //드라이버 로딩
+		      
+		            
+		// DB연결(ip주소, port번호 , DB명 , ID, PW)
+		String jdbcDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr"; //데이터베이스 명
+		String dbUser = "root";        
+		String dbPass = "java0000"; 
+		            
+		conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+		System.out.println(conn + "<--conn");
+		pstmt = conn.prepareStatement("DELETE FROM member_score WHERE member_no=?");
+		 pstmt.setInt(1, member_no);
+		            
+		pstmt.executeUpdate();
+		            
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			  			
+			// 객체 종료(닫는 순서 중요)
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+				  			
+		}
+				
+}
+	
 	public int updateMemberScore (MemberScore ms) {
 		//return data type int / updateMemberScore 메소드 (MemberScore data type으로 매겨변수 ms 생성)
 		/*Member_score 테이블에 입력받은 점수가 중복이면 점수를 업데이트*/
@@ -228,7 +265,7 @@ public class MemberScoreDao {
 	}
 
 	public void insertMemberScore (MemberScore ms) {
-		//리턴 없고 insertMemberScort 메소드 (MemberScore data type으로 매개변수 ms 생성)
+		// return 없고 insertMemberScort 메소드 (MemberScore data type으로 매개변수 ms 생성)
 		/*Member_score 테이블에 점수 입력하는 메소드*/
 		Connection conn = null;
 	    PreparedStatement pstmt = null;

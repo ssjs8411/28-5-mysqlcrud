@@ -6,15 +6,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>insertScoreForm</title>
 </head>
-<body>
+	<body>
 <%
 	int member_no = Integer.parseInt(request.getParameter("member_no"));	//형변환
 %>
 
-	<form action="<%=request.getContextPath()%>/Member/insertScoreAction.jsp">
-		<input type="hidden" name="member_no" value="<%=member_no%>">
-		score : <input type="text" name="score">
-		 <input type="submit" value="입력">
-	</form>
-</body>
+		<form action="<%=request.getContextPath()%>/Member/insertScoreAction.jsp">
+			<input type="hidden" name="member_no" value="<%=member_no%>">
+			score : <input type="text" name="score">
+			 <input type="submit" value="입력">
+		</form>
+		<a href="<%= request.getContextPath()%>/Member/MemberList.jsp">MemberList</a>
+	</body>
 </html>

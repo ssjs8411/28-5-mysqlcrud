@@ -43,5 +43,6 @@
 	}
 %>
 		</table>
+		<a href="<%= request.getContextPath()%>/Member/MemberList.jsp">MemberList</a>
 </body>
 </html>

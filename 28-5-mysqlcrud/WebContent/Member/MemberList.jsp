@@ -17,6 +17,7 @@
                 <td>나이</td>
                 <td>주소입력</td><!-- 다수 -->
                 <td>점수입력</td>
+                <td>점수보기</td>
                 <td>수정</td>
                 <td>삭제</td>
             </tr>
@@ -51,8 +52,9 @@
                 <td><%= m.getMember_age() %></td>
                 <td><a href="<%=request.getContextPath()%>/Member/insertMemberAddrForm.jsp?member_no=<%= m.getMember_no() %>">주소입력</a></td>
                 <td><a href="<%=request.getContextPath()%>/Member/insertScoreForm.jsp?member_no=<%= m.getMember_no() %>">점수입력</a></td>
+                <td><a href="<%=request.getContextPath()%>/Member/MemberAndScoreList.jsp?member_no=<%= m.getMember_no() %>">점수보기</a></td>
                 <td><a href="<%=request.getContextPath()%>/Member/updateMemberForm.jsp?member_no=<%= m.getMember_no() %>">수정</a></td>
-                <td><a href="<%=request.getContextPath()%>/Member/deleteMember.jsp?member_no=<%= m.getMember_no() %>">삭제</a></td>
+                <td><a href="<%=request.getContextPath()%>/Member/deleteMemberAction.jsp?member_no=<%= m.getMember_no() %>">삭제</a></td>
                 <!-- updateMemberForm -> updateMemberAction 넘어가게 -->
             </tr>
 <%

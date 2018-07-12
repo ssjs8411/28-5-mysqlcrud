@@ -15,5 +15,6 @@
 			주소 : <input type="text" name="member_addr_content">
 			<button type="submit">입력</button>
 		</form>
-</body>
+		<a href="<%= request.getContextPath()%>/Member/MemberList.jsp">MemberList</a>
+	</body>
 </html>
