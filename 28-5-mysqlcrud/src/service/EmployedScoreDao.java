@@ -10,6 +10,50 @@ import java.util.ArrayList;
 
 public class EmployedScoreDao {
 	
+	public int selectEmployedScore(int employed_no) {
+		// 한명의 점수가 입력이 되어있는지 확인하는 메서드
+		// employed_no 값을 받아서 쿼리문 작성
+		// int값을 리턴한다. 조회결과가 있으면 1
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int check = 0;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+			String dbUser = "root";
+			String dbPass = "java0000";
+			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+			
+			pstmt = conn.prepareStatement("SELECT employed_score FROM employed_score WHERE employed_no=?");
+			pstmt.setInt(1, employed_no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				check = 1;
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(실행순서 거꾸로 종료시켜준다)
+			if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		
+		return check;
+		
+	}
+	
 	public int deleteEmployedScore(int no) {
 		// employed_score 테이블의 정보를 삭제하는 메서드
 		// 쿼리 실행 결과값 리턴
@@ -113,7 +157,7 @@ public class EmployedScoreDao {
 			String dbUser = "root";
 			String dbPass = "java0000";
 			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
-			pstmt = conn.prepareStatement("SELECT employed.employed_no, employed.employed_name, employed_score.employed_score FROM employed_score INNER JOIN employed ON employed_score.employed_no = employed.employed_no WHERE employed_score.employed_score >= (SELECT AVG(employed_score) FROM employed_score)");			
+			pstmt = conn.prepareStatement("SELECT employed.employed_no, employed.employed_name, employed_score.employed_score FROM employed_score INNER JOIN employed ON employed_score.employed_no = employed.employed_no WHERE employed_score.employed_score >= (SELECT AVG(employed_score) FROM employed_score) ORDER BY employed_score DESC");			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -169,7 +213,7 @@ public class EmployedScoreDao {
 			String dbPass = "java0000";
 			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
 			
-			pstmt = conn.prepareStatement("SELECT employed_score.employed_score_no, employed_score.employed_score, employed.employed_no, employed.employed_name, employed.employed_age FROM employed_score INNER JOIN employed ON employed_score.employed_no = employed.employed_no");
+			pstmt = conn.prepareStatement("SELECT employed_score.employed_score_no, employed_score.employed_score, employed.employed_no, employed.employed_name, employed.employed_age FROM employed_score INNER JOIN employed ON employed_score.employed_no = employed.employed_no ORDER BY employed_score DESC");
 		
 			rs = pstmt.executeQuery();
 			

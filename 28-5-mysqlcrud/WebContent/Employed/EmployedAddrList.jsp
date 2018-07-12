@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ page import = "service.EmployedAddrDao" %>
 <%@ page import = "service.EmployedAddr" %>
+<%@ page import = "java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -18,7 +19,7 @@
 		
 		<table>
 			<tr>
-				<th>번호</th>
+				<th>주소번호</th>
 				<th>주소</th>
 			</tr>
 <%
@@ -26,13 +27,19 @@
 		int employed_no = Integer.parseInt(request.getParameter("employed_no"));
 		
 		EmployedAddrDao eaddrdao = new EmployedAddrDao();
-		EmployedAddr eaddr = eaddrdao.selectEmployedAddr(employed_no);
+		ArrayList<EmployedAddr> alea = eaddrdao.selectEmployedAddrList(employed_no);
 		
+		for(int i=0; i<alea.size(); i++){
+			EmployedAddr ea = alea.get(i);
 %>
 			<tr>
-				<td><%= eaddr.getEmployed_no() %></td>
-				<td><%= eaddr.getEmployed_addr_content() %></td>
+				<td><%= ea.getEmployed_addr_no() %></td>
+				<td><%= ea.getEmployed_addr_content() %></td>
 			</tr>
+<%			
+		}
+%>
+			
 		</table>
 		<a href="<%=request.getContextPath() %>/Employed/EmployedList.jsp">리스트</a>	
 	</body>

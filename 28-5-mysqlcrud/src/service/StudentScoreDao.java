@@ -10,6 +10,49 @@ import java.util.ArrayList;
 
 public class StudentScoreDao {
 	
+	public int selectStudentScore(int student_no) {
+		// 한명의 점수가 입력이 되어있는지 확인하는 메서드
+		// student_no 값을 받아서 쿼리문 작성
+		// int값을 리턴한다. 조회결과가 있으면 1
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int check = 0;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+			String dbUser = "root";
+			String dbPass = "java0000";
+			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
+			
+			pstmt = conn.prepareStatement("SELECT score FROM student_score WHERE student_no=?");
+			pstmt.setInt(1, student_no);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				check = 1;
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(실행순서 거꾸로 종료시켜준다)
+			if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		
+		return check;
+		
+	}
+	
 	public int deleteStudentScore(int no) {
 		
 		Connection conn = null;
@@ -110,7 +153,7 @@ public class StudentScoreDao {
 			String dbUser = "root";
 			String dbPass = "java0000";
 			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
-			pstmt = conn.prepareStatement("SELECT student.student_no, student.student_name, student_score.score FROM student_score INNER JOIN student ON student_score.student_no = student.student_no WHERE student_score.score >= (SELECT AVG(score) FROM student_score)");			
+			pstmt = conn.prepareStatement("SELECT student.student_no, student.student_name, student_score.score FROM student_score INNER JOIN student ON student_score.student_no = student.student_no WHERE student_score.score >= (SELECT AVG(score) FROM student_score) ORDER BY score DESC");			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -166,7 +209,7 @@ public class StudentScoreDao {
 			String dbPass = "java0000";
 			conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);
 			
-			pstmt = conn.prepareStatement("SELECT student_score.student_score_no, student_score.score, student.student_no, student.student_name, student.student_age FROM student_score INNER JOIN student ON student_score.student_no = student.student_no");
+			pstmt = conn.prepareStatement("SELECT student_score.student_score_no, student_score.score, student.student_no, student.student_name, student.student_age FROM student_score INNER JOIN student ON student_score.student_no = student.student_no ORDER BY score DESC");
 		
 			rs = pstmt.executeQuery();
 			

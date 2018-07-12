@@ -3,6 +3,7 @@
 <%@ page import = "service.StudentDao" %>
 <%@ page import = "java.util.ArrayList" %>
 <%@ page import = "service.Student" %>
+<%@ page import = "service.StudentScoreDao" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -46,8 +47,10 @@
 	StudentDao sdao = new StudentDao();		// StudentDao 클래스 연결
 	ArrayList<Student> list = sdao.selectStudentByPage(startRow, rowPerPage,searchWord);	// StudentDao 클래스 내 selectStudentByPage메서드 호출(매개변수 시작번호, 한페이지당 보는갯수)
 	
+	StudentScoreDao scdao = new StudentScoreDao();
 	for(int i=0; i<list.size(); i++){
 		Student s = list.get(i);
+		int scoreCheck = scdao.selectStudentScore(s.getStudent_no());
 %>
 		
 			<tr>
@@ -55,7 +58,21 @@
 				<td><a href="<%=request.getContextPath()%>/Student/studentAddrList.jsp?student_no=<%=s.getStudent_no()%>"><%= s.getStudent_name() %></a></td>
 				<td><%= s.getStudent_age() %></td>
 				<td><a href="<%=request.getContextPath()%>/Student/insertStudentAddrForm.jsp?student_no=<%=s.getStudent_no()%>">주소등록</a></td>
-				<td><a href="<%=request.getContextPath()%>/Student/insertScoreForm.jsp?student_no=<%=s.getStudent_no()%>">점수입력</a></td>
+				<td>
+					<a href="<%=request.getContextPath()%>/Student/insertScoreForm.jsp?student_no=<%=s.getStudent_no()%>">
+<%
+		if(scoreCheck == 0){
+%>					
+					점수입력
+<%
+		}else{
+%>
+					점수수정
+<%
+		}
+%>
+					</a>
+				</td>
 				<td><a href="<%=request.getContextPath()%>/Student/updateStudentForm.jsp?student_no=<%=s.getStudent_no()%>">수정</a></td>
 				<td><a href="<%=request.getContextPath()%>/Student/deleteStudent.jsp?student_no=<%=s.getStudent_no()%>">삭제</a></td>
 			</tr>	

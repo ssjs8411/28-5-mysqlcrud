@@ -3,6 +3,7 @@
 <%@ page import = "service.EmployedDao" %>
 <%@ page import = "java.util.ArrayList" %>
 <%@ page import = "service.Employed" %>
+<%@ page import = "service.EmployedScoreDao" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -17,7 +18,7 @@
 	<body>
 		<table>
 			<tr>
-				<th>번호</th>
+				<th>직원번호</th>
 				<th>이름</th>
 				<th>나이</th>
 				<th>주소등록</th>
@@ -44,17 +45,32 @@
 			
 	EmployedDao edao = new EmployedDao();		// EmployedDao 클래스 연결
 	ArrayList<Employed> list = edao.selectEmployedByPage(startRow, rowPerPage, searchWord);	// EmployedDao 클래스 내 selectEmployedByPage 호출(매개변수 시작번호, 한페이지당 보는갯수)
-	
+	EmployedScoreDao esdao = new EmployedScoreDao();
 	for(int i=0; i<list.size(); i++){
 		Employed e = list.get(i);
+		int scoreCheck = esdao.selectEmployedScore(e.getEmployed_no());
 %>
 		
 			<tr>
 				<td><%= e.getEmployed_no() %></td>
-				<td><%= e.getEmployed_name() %></td>
+				<td><a href="<%=request.getContextPath()%>/Employed/EmployedAddrList.jsp?employed_no=<%=e.getEmployed_no()%>"><%= e.getEmployed_name() %></a></td>
 				<td><%= e.getEmployed_age() %></td>
 				<td><a href="<%=request.getContextPath()%>/Employed/insertEmployedAddrForm.jsp?employed_no=<%=e.getEmployed_no()%>">주소등록</a></td>
-				<td><a href="<%=request.getContextPath()%>/Employed/insertEmployedScoreForm.jsp?employed_no=<%=e.getEmployed_no()%>">점수입력</a></td>
+				<td>
+					<a href="<%=request.getContextPath()%>/Employed/insertEmployedScoreForm.jsp?employed_no=<%=e.getEmployed_no()%>">
+<%
+	if(scoreCheck == 0){
+%>					
+					점수입력
+<%
+	}else{
+%>		
+					점수수정
+<%
+	}
+%>			
+					</a>
+				</td>
 				<td><a href="<%=request.getContextPath()%>/Employed/updateEmployedForm.jsp?employed_no=<%=e.getEmployed_no()%>">수정</a></td>
 				<td><a href="<%=request.getContextPath()%>/Employed/deleteEmployed.jsp?employed_no=<%=e.getEmployed_no()%>">삭제</a></td>				
 			</tr>	

@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class EmployedAddrDao {
 	
@@ -128,6 +129,65 @@ public class EmployedAddrDao {
 		}
 		
 		return eaddr;
+		
+	}
+	
+	
+	public ArrayList<EmployedAddr> selectEmployedAddrList(int employed_no){
+		// 받아온 employed_no의 값을 조회하여 한명의 주소 조회하는 메서드
+		// EmployedAddr클래스의 주소 리턴(배열) ->여러개의 값이 있으면 여러개 조회
+		// employed_no의 값을 받아서 쿼리문 작성
+		
+		ArrayList<EmployedAddr> alea = new ArrayList<EmployedAddr>();
+		Connection conn = null;				// DB 연결을 위한 변수 선언 및 값 초기화
+		PreparedStatement pstmt = null;		// 객체 생성을 위한 변수 선언 및 값 초기화
+		ResultSet rs = null;
+		
+		try {
+			
+			// 1단계: 드라이버로딩
+				Class.forName("com.mysql.jdbc.Driver");
+			
+			// 2단계: DB연결
+				String dbDriver = "jdbc:mysql://localhost:3306/5mysqlcrud?useUnicode=true&characterEncoding=euckr";
+				String dbUser = "root";
+				String dbPass = "java0000";
+				conn = DriverManager.getConnection(dbDriver, dbUser, dbPass);	// 드라이버 접속
+				
+			// 3단계: 쿼리 실행준비(쿼리문 작성)
+				pstmt = conn.prepareStatement("SELECT employed_addr_no, employed_no, employed_addr_content FROM employed_addr WHERE employed_no=?");
+				pstmt.setInt(1, employed_no);
+			
+			// 4단계 : 쿼리 실행
+				rs = pstmt.executeQuery();
+				
+			// 5단계 : 쿼리 실행결과 사용
+				while(rs.next()) {
+					EmployedAddr eaddr = new EmployedAddr();
+					
+					eaddr.setEmployed_addr_no(rs.getInt("employed_addr_no"));
+					eaddr.setEmployed_no(rs.getInt("employed_no"));
+					eaddr.setEmployed_addr_content(rs.getString("employed_addr_content"));
+					
+					alea.add(eaddr);
+				}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			// 객체 종료(실행순서 거꾸로 종료시켜준다)
+			if(rs!=null) try{ rs.close(); } catch (SQLException e) {}
+			if(pstmt!=null) try{ pstmt.close(); } catch (SQLException e) {}	// 쿼리연결종료
+			if(conn!=null) try{ conn.close(); } catch (SQLException e) {}	// DB연결종료
+			
+		}
+		
+		
+		return alea;
 		
 	}
 	
