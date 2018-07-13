@@ -24,6 +24,7 @@
 				<th>나이</th>
 				<th>주소등록</th>
 				<th>점수입력</th>
+				<th>점수보기</th>
 				<th>수정</th>
 				<th>삭제</th>
 			</tr>
@@ -73,6 +74,7 @@
 %>
 					</a>
 				</td>
+				<td><a href="<%=request.getContextPath()%>/Student/studentAndScoreList.jsp">점수보기</a></td>
 				<td><a href="<%=request.getContextPath()%>/Student/updateStudentForm.jsp?student_no=<%=s.getStudent_no()%>">수정</a></td>
 				<td><a href="<%=request.getContextPath()%>/Student/deleteStudent.jsp?student_no=<%=s.getStudent_no()%>">삭제</a></td>
 			</tr>	

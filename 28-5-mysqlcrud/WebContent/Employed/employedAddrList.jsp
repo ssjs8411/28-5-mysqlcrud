@@ -41,6 +41,6 @@
 %>
 			
 		</table>
-		<a href="<%=request.getContextPath() %>/Employed/EmployedList.jsp">리스트</a>	
+		<a href="<%=request.getContextPath() %>/Employed/employedList.jsp">리스트</a>	
 	</body>
 </html>

@@ -18,5 +18,5 @@
 		sdao.deleteEmployed(employed_no);
 	}
 	
-	response.sendRedirect(request.getContextPath() + "/Employed/EmployedList.jsp");
+	response.sendRedirect(request.getContextPath() + "/Employed/employedList.jsp");
 %>

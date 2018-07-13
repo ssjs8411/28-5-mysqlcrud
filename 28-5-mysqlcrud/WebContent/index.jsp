@@ -42,9 +42,9 @@
 			<td>직원</td>
 			<td>
 				<a href="<%=request.getContextPath() %>/Employed/insertEmployedForm.jsp">직원등록</a>
-				<a href="<%=request.getContextPath() %>/Employed/EmployedList.jsp">직원목록</a>
-				<a href="<%=request.getContextPath() %>/Employed/EmployedAndScoreList.jsp">직원점수</a>
-				<a href="<%=request.getContextPath() %>/Employed/EmployedListAboveAvg.jsp">평균점수이상목록</a></td>
+				<a href="<%=request.getContextPath() %>/Employed/employedList.jsp">직원목록</a>
+				<a href="<%=request.getContextPath() %>/Employed/employedAndScoreList.jsp">직원점수</a>
+				<a href="<%=request.getContextPath() %>/Employed/employedListAboveAvg.jsp">평균점수이상목록</a></td>
 		</tr>
 	</table>
 </body>

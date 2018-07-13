@@ -23,6 +23,7 @@
 				<th>나이</th>
 				<th>주소등록</th>
 				<th>점수입력</th>
+				<th>점수보기</th>
 				<th>수정</th>
 				<th>삭제</th>				
 			</tr>	
@@ -53,7 +54,7 @@
 		
 			<tr>
 				<td><%= e.getEmployed_no() %></td>
-				<td><a href="<%=request.getContextPath()%>/Employed/EmployedAddrList.jsp?employed_no=<%=e.getEmployed_no()%>"><%= e.getEmployed_name() %></a></td>
+				<td><a href="<%=request.getContextPath()%>/Employed/employedAddrList.jsp?employed_no=<%=e.getEmployed_no()%>"><%= e.getEmployed_name() %></a></td>
 				<td><%= e.getEmployed_age() %></td>
 				<td><a href="<%=request.getContextPath()%>/Employed/insertEmployedAddrForm.jsp?employed_no=<%=e.getEmployed_no()%>">주소등록</a></td>
 				<td>
@@ -71,6 +72,7 @@
 %>			
 					</a>
 				</td>
+				<td><a href="<%=request.getContextPath()%>/Employed/employedAndScoreList.jsp">점수보기</a></td>
 				<td><a href="<%=request.getContextPath()%>/Employed/updateEmployedForm.jsp?employed_no=<%=e.getEmployed_no()%>">수정</a></td>
 				<td><a href="<%=request.getContextPath()%>/Employed/deleteEmployed.jsp?employed_no=<%=e.getEmployed_no()%>">삭제</a></td>				
 			</tr>	
@@ -78,7 +80,7 @@
 	}
 %>
 		</table>
-		<form action="<%=request.getContextPath()%>/Employed/EmployedList.jsp" method="post">
+		<form action="<%=request.getContextPath()%>/Employed/employedList.jsp" method="post">
 			<input type="text" name="searchWord">
 			<input type="submit" value="검색">
 		</form>
@@ -96,12 +98,12 @@
 				
 	if(currentPage > 1){
 %>
-		<a href="<%=request.getContextPath() %>/Employed/EmployedList.jsp?currentPage=<%=currentPage-1 %>">이전</a>
+		<a href="<%=request.getContextPath() %>/Employed/employedList.jsp?currentPage=<%=currentPage-1 %>">이전</a>
 <%
 	}
 	if(currentPage < lastPage){
 %>
-		<a href="<%=request.getContextPath() %>/Employed/EmployedList.jsp?currentPage=<%=currentPage+1%>">다음</a>
+		<a href="<%=request.getContextPath() %>/Employed/employedList.jsp?currentPage=<%=currentPage+1%>">다음</a>
 <%
 	}
 %>	

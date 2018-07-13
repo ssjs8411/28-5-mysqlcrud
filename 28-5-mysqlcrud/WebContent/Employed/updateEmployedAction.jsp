@@ -24,5 +24,5 @@
 	EmployedDao edao = new EmployedDao();
 	edao.updateEmployed(e);
 	
-	response.sendRedirect(request.getContextPath() + "/Employed/EmployedList.jsp");
+	response.sendRedirect(request.getContextPath() + "/Employed/employedList.jsp");
 %>

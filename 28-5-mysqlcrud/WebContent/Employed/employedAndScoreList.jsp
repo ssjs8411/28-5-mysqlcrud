@@ -48,5 +48,6 @@
 	}
 %>
 		</table>	
+		<a href="<%=request.getContextPath()%>/Employed/employedList.jsp">EmployedList</a>
 	</body>
 </html>

@@ -9,5 +9,5 @@
 	EmployedAddrDao eaddrdao = new EmployedAddrDao();
 	eaddrdao.insertEmployedAddr(eaddr);
 	
-	response.sendRedirect(request.getContextPath() + "/Employed/EmployedList.jsp");
+	response.sendRedirect(request.getContextPath() + "/Employed/employedList.jsp");
 %>
