@@ -5,8 +5,9 @@
 <%@ page import = "service.MemberAddr" %>			<!-- service패키지 안에 MemberAddr클래스 import-->
 <%@ page import = "service.MemberAddrDao" %>		<!-- service패키지 안에 MemberAddrDao클래스 import-->
 <!DOCTYPE html>
-<%request.setCharacterEncoding("euc-kr"); %>  <!-- 한글 깨지지않게 -->
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<%
+request.setCharacterEncoding("euc-kr"); 	//한글 깨지지 않게
+%>  
 <jsp:useBean id="m" class="service.Member"/>  <!-- Member의 주소값을 변수 m에 대입 Member 객체 내부의 변수명이 같으면 set메서드에 값을 셋팅  -->
 <jsp:setProperty name="m" property="*"/> <!-- m에 담겨있는 주소값을 따라가서 메소드 개수만큼 모두 호출  -->
 <jsp:useBean id="maddr" class="service.MemberAddr"/>  <!-- Member의 주소값을 변수 maddr에 대입 Member 객체 내부의 변수명이 같으면 set메서드에 값을 셋팅  -->
@@ -28,6 +29,6 @@
 	mdao.updateMember(m);
 	//m에 담겨있는 주소 값을 따라가서 updateMember 메소드를 호출
 	
-	response.sendRedirect(request.getContextPath() + "/Member/MemberList.jsp");
+	response.sendRedirect(request.getContextPath() + "/Member/memberList.jsp");
 	//MemberList.jsp로 이동
 %>

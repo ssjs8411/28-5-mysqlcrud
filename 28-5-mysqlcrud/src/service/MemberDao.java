@@ -10,8 +10,10 @@ import java.util.ArrayList;
  
 public class MemberDao {
 	
+
 	public void deleteMember (int member_no) {
-			
+			// return 없는 deleteMember메소드 (int data type으로 매개변수 member_no 선언)
+			// 멤버 삭제 메소드
 			Connection conn = null;
 			PreparedStatement pstmt  = null;
 			
@@ -47,7 +49,8 @@ public class MemberDao {
 	}
 	
 	public void updateMember(Member m) {
-			//리턴 없는 updateMember 메소드  (Member data type으로 매개변수 m선언)
+			// return 없는 updateMember 메소드  (Member data type으로 매개변수 m선언)
+			// 멤버 수정 메소드
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			
@@ -81,8 +84,9 @@ public class MemberDao {
 		}
 	}
 	
-	public Member mSelectUpdate(int member_no) {
-			//return data type Member, mSelectUpdate 메소드 (int data type으로 매개변수 member_no 선언)
+	public Member selectUpdateMember(int member_no) {
+			// return data type Member, mSelectUpdate 메소드 (int data type으로 매개변수 member_no 선언)
+			// 수정처리할 때 쓰는 메소드
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -131,7 +135,8 @@ public class MemberDao {
 	
 	
     public int selectCount() {
-	        	//return data type int, selectCount 메소드
+	        	// return data type int, selectCount 메소드
+    			// 페이징할 때 쓰는 메소드
 	            Connection conn = null;
 	            PreparedStatement pstmt = null;
 	            ResultSet rs = null;

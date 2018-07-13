@@ -15,7 +15,7 @@
 		msdao.insertMemberScore(ms);
 	}
 	
-	response.sendRedirect(request.getContextPath() + "/Member/MemberList.jsp");
+	response.sendRedirect(request.getContextPath() + "/Member/memberList.jsp");
 	//MemberList.jsp·Î ÀÌµ¿
 
 %>

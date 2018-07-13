@@ -9,12 +9,12 @@ import java.util.ArrayList;
 
 public class MemberAddrDao {
 	
-	public ArrayList<MemberAddr> memberListSelect (String member_name){
+	public ArrayList<MemberAddr> memberListSelect (int member_no){
 		//return data type ArrayList<MemberAddr>, memberListSelect 메소드 (String data type으로 매개변수 member_name 생성)
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ArrayList<MemberAddr> alm = new ArrayList<MemberAddr>();
+		ArrayList<MemberAddr> alm = new ArrayList<>();
 		//ArrayList<MemberAddr> data type으로  alm변수 선언하고 new생성자 메소드로 생성된 ArrayList<MemberAddr>객체의 주소 값을  alm변수에 할당한다
 		
 		try {
@@ -31,7 +31,7 @@ public class MemberAddrDao {
             conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
 			System.out.println(conn + "<--conn");
 			
-			pstmt = conn.prepareStatement("SELECT member_addr_no, member_no, member_addr_content FROM member_addr WHERE member_no=?");
+			pstmt = conn.prepareStatement("SELECT member_addr.member_addr_no, member.member_no, member_addr.member_addr_content FROM member JOIN member_addr ON member.member_no=member_addr.member_addr_no WHERE member_name=? ORDER BY member_addr_no DESC;");
 			rs = pstmt.executeQuery();
 			
 		while(rs.next()) {
@@ -117,7 +117,7 @@ public class MemberAddrDao {
             System.out.println(conn + "<--conn");
             
             // 쿼리문 작성
-            pstmt = conn.prepareStatement("UPDATE member_addr_no SET member_addr_cnotent=? WHERE member_no=?");
+            pstmt = conn.prepareStatement("UPDATE member_addr SET member_addr_content=? WHERE member_no=?");
             pstmt.setString(1, maddr.getMember_addr_content());
             pstmt.setInt(2, maddr.getMember_no());
             
@@ -141,7 +141,7 @@ public class MemberAddrDao {
       }
 
 	
-	public MemberAddr mSelectforUpdateAddr (int member_no) {
+	public MemberAddr selectUpdateMemberAddr (int member_no) {
 		//return data type MemberAddr, mSelectUpdateAddr메소드 (int data type으로 매개변수 member_no 생성)
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -159,16 +159,12 @@ public class MemberAddrDao {
             System.out.println(conn + "<--conn");
             
             // 쿼리문 작성
-            pstmt = conn.prepareStatement("SELECT member_addr_no, member_no, member_addr_content FROM member_no WHERE member_no=?");
+            pstmt = conn.prepareStatement("SELECT member_addr_no, member_no, member_addr_content FROM member_addr WHERE member_no=?");
             pstmt.setInt(1, member_no);
                        
             // 쿼리 실행
             rs = pstmt.executeQuery();
-            pstmt.setInt(1, member_no);
-            
-            // 쿼리 실행
-            rs = pstmt.executeQuery();
-            
+  
             if(rs.next()) {
             	maddr.setMember_addr_no(rs.getInt("member_addr_no"));
             	maddr.setMember_no(rs.getInt("member_no"));
@@ -194,7 +190,7 @@ public class MemberAddrDao {
 		//maddr에 담겨있는 주소 값을 리턴
 	}
 	
-	public MemberAddr mSelectAddr (int member_no) {
+	public MemberAddr selectMemberAddr (int member_no) {
 		//return data type MemberAddr, mSelectAddr메소드 (int data type으로 매개변수 member_no 생성)
 		Connection conn = null;
 		PreparedStatement pstmt = null;

@@ -11,6 +11,6 @@
 	//MemberDao type으로 mdao 변수를 선언하고 new 생성자 메서드로 MemberDao객체를  생성하여 객체 내 주소값을 mdao변수에 할당한다.
 	mdao.insertMember(m);
 	//m에 담겨있는 주소값을 따라가서 insertMember메소드를 호출
-	response.sendRedirect(request.getContextPath() + "/Member/MemberList.jsp");
+	response.sendRedirect(request.getContextPath() + "/Member/memberList.jsp");
 	//MemberList.jsp로 이동
 %>

@@ -18,8 +18,8 @@
 			<td>멤버</td>
 			<td>
 				<a href="<%=request.getContextPath() %>/Member/insertMemberForm.jsp">멤버등록</a>
-				<a href="<%=request.getContextPath() %>/Member/MemberList.jsp">멤버목록</a>
-				<a href="<%=request.getContextPath() %>/Member/MemberAndScoreList.jsp">멤버점수</a>
+				<a href="<%=request.getContextPath() %>/Member/memberList.jsp">멤버목록</a>
+				<a href="<%=request.getContextPath() %>/Member/memberAndScoreList.jsp">멤버점수</a>
 				<a href="<%=request.getContextPath() %>/Member/memberListAboveAvg.jsp">평균점수이상목록</a></td>
 		</tr>
 		<tr>

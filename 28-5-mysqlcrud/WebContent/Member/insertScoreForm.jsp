@@ -16,6 +16,6 @@
 			score : <input type="text" name="score">
 			 <input type="submit" value="ют╥б">
 		</form>
-		<a href="<%= request.getContextPath()%>/Member/MemberList.jsp">MemberList</a>
+		<a href="<%= request.getContextPath()%>/Member/memberList.jsp">memberList</a>
 	</body>
 </html>

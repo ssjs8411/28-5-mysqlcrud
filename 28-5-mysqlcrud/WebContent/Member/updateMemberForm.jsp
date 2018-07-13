@@ -13,16 +13,15 @@
 	<body>
 <%
 	request.setCharacterEncoding("euc-kr");			//한글 안 깨지게
-	
 	int member_no = Integer.parseInt(request.getParameter("member_no"));		//형변환
 
 	MemberDao mdao = new MemberDao();
 	//MemberDao data type으로 mdao 변수 생성하고  new생성자 메소드로  생성된  MemberDao 객체의 주소 값을 mdao 변수에 할당한다
-	Member m = mdao.mSelectUpdate(member_no);
+	Member m = mdao.selectUpdateMember  (member_no);
 	//member_no에 담겨있는 주소 값을 따라가서 mSelectUpdate 메소드를 호출한다
 	MemberAddrDao maddrdao = new MemberAddrDao();
 	//MemberAddrDao data type으로 maddrdao 변수 생성하고  new생성자 메소드로  생성된  MemberAddrDao 객체의 주소 값을 maddrdao 변수에 할당한다
-	MemberAddr maddr = maddrdao.mSelectUpdateAddr(member_no);
+	MemberAddr maddr = maddrdao.selectUpdateMemberAddr (member_no);
 	//member_no에 담겨있는 주소 값을 따라가서 mSelectUpdateAddr 메소드를 호출한다
 	
 
